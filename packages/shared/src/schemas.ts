@@ -244,8 +244,7 @@ export const FileMetadataSchema = z
     size: z
       .number()
       .int("File size must be an integer")
-      .nonnegative("File size cannot be negative")
-      .max(MAX_FILE_SIZE_BYTES, "File size exceeds 50 GB maximum per transfer"),
+      .nonnegative("File size cannot be negative"),
     type: z.string().trim().min(1, "MIME type cannot be empty").max(128, "MIME type is too long"),
   })
   .strict();

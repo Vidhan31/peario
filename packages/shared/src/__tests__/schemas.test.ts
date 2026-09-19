@@ -10,7 +10,6 @@ import {
   formatValidationError,
   IceCandidateSchema,
   MAX_CHUNK_SIZE,
-  MAX_FILE_SIZE_BYTES,
   MIN_CHUNK_SIZE,
   PeerIdSchema,
   PeerNameSchema,
@@ -53,24 +52,14 @@ describe("Shared Schemas & Validation Hardening", () => {
       expect(parsed.size).toBe(0);
     });
 
-    it("accepts file size exactly at the 50 GB upper limit", () => {
+    it("accepts arbitrarily large file sizes without restriction", () => {
+      const veryLargeSize = 100 * 1024 * 1024 * 1024; // 100 GB
       const parsed = FileMetadataSchema.parse({
         name: "massive-backup.iso",
-        size: MAX_FILE_SIZE_BYTES,
+        size: veryLargeSize,
         type: "application/octet-stream",
       });
-      expect(parsed.size).toBe(MAX_FILE_SIZE_BYTES);
-    });
-
-    it("rejects file sizes exceeding 50 GB by even 1 byte", () => {
-      const oversized = MAX_FILE_SIZE_BYTES + 1;
-      expect(() =>
-        FileMetadataSchema.parse({
-          name: "huge.iso",
-          size: oversized,
-          type: "application/octet-stream",
-        }),
-      ).toThrowError(/exceeds 50 GB/);
+      expect(parsed.size).toBe(veryLargeSize);
     });
 
     it("rejects path traversal sequences and directory separators in filenames", () => {
