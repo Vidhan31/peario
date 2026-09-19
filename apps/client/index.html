@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta
+      name="description"
+      content="Pear IO - Secure, peer-to-peer file sharing directly in your browser. Fast, private, and easy to use."
+    />
+    <meta name="keywords" content="p2p, file sharing, webrtc, secure, private, browser-based, pear io" />
+    <meta name="author" content="Pear IO" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://peario.app; media-src 'self' blob:; connect-src 'self' https://signal.peario.app wss://signal.peario.app https://*.metered.live wss://*.metered.live https: wss: http: ws:; worker-src 'self' blob:; object-src 'none';"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://peario.app/" />
+    <meta property="og:title" content="Pear IO - P2P File Sharing" />
+    <meta
+      property="og:description"
+      content="Secure, peer-to-peer file sharing directly in your browser. Fast, private, and easy to use."
+    />
+    <meta property="og:image" content="https://peario.app/pear_og_image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://peario.app/" />
+    <meta property="twitter:title" content="Pear IO - P2P File Sharing" />
+    <meta
+      property="twitter:description"
+      content="Secure, peer-to-peer file sharing directly in your browser. Fast, private, and easy to use."
+    />
+    <meta property="twitter:image" content="https://peario.app/pear_og_image.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Pear IO</title>
+  </head>
+  <body class="bg-background text-foreground antialiased selection:bg-primary selection:text-background min-h-screen">
+    <div id="root"></div>
+    <script>
+      (function () {
+        try {
+          var storageKey = "ui-theme";
+          var theme = localStorage.getItem(storageKey);
+          var supportDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches === true;
+          if (!theme || theme === "system") {
+            if (supportDarkMode) {
+              document.documentElement.classList.add("dark");
+            } else {
+              document.documentElement.classList.remove("dark");
+            }
+          } else {
+            document.documentElement.classList.add(theme);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="/src/main.tsx" type="module"></script>
+  </body>
+</html>

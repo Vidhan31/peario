@@ -1,0 +1,37 @@
+{
+  "name": "@peario/server",
+  "version": "1.0.0",
+  "description": "A signal server for Pear, a peer-to-peer file sharing application - Bun Backend",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/server.ts",
+    "dev": "bun --hot src/server.ts",
+    "type-check": "bun run tsc --noEmit",
+    "build": "bun run tsc",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@peario/shared": "workspace:*",
+    "@socket.io/bun-engine": "catalog:",
+    "rate-limiter-flexible": "^8.3.0",
+    "socket.io": "catalog:",
+    "tslog": "catalog:",
+    "zod": "catalog:",
+    "zod-validation-error": "catalog:"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/bun": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
+    "eslint-plugin-unicorn": "catalog:",
+    "globals": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  }
+}
