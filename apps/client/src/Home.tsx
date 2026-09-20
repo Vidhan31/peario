@@ -1,11 +1,15 @@
-import { Suspense, useEffect, useState } from "react";
+import type { PeerId } from "@peario/shared";
+
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 import NameEntry from "./components/NameEntry.tsx";
 import Pear from "./components/Pear.tsx";
 import { ToastContainer } from "./components/ToastContainer.tsx";
 import { QUERY_PARAMS, STORAGE_KEYS } from "./constants/index.ts";
+import { PeerConnectionContext } from "./contexts/PeerConnectionContext.ts";
 import { PeerConnectionProvider } from "./contexts/PeerConnectionProvider.tsx";
+import { PeersContext } from "./contexts/PeersContext.ts";
 import { PeersProvider } from "./contexts/PeersProvider.tsx";
 import { ToastProvider } from "./contexts/ToastProvider.tsx";
 import { useSocketErrorHandler } from "./hooks/useSocketErrorHandler.ts";
@@ -72,6 +76,46 @@ const AppContent = ({ userName, initialRoomId }: { userName: string; initialRoom
   );
 };
 
+const PreviewMainUI = () => {
+  const peersValue = useMemo(
+    () => ({
+      localPeer: {
+        id: "preview-local" as PeerId,
+        name: "",
+        timestamp: new Date().toISOString(),
+      },
+      peers: [],
+      selectedPeerId: null,
+      setSelectedPeerId: () => undefined,
+    }),
+    [],
+  );
+
+  const peerConnectionValue = useMemo(
+    () => ({
+      getPeerConnection: () => null,
+      getDataChannel: () => null,
+      waitForChannel: () => new Promise<never>(() => undefined),
+      closePeerConnection: () => undefined,
+      initiateConnection: () => Promise.resolve(),
+      connectionStates: new Map(),
+      relayStatuses: new Map(),
+      remotePeers: new Map(),
+      sendConnectionRequest: () => undefined,
+      connectToRoom: () => undefined,
+    }),
+    [],
+  );
+
+  return (
+    <PeersContext value={peersValue}>
+      <PeerConnectionContext value={peerConnectionValue}>
+        <Pear initialRoomId={null} preview />
+      </PeerConnectionContext>
+    </PeersContext>
+  );
+};
+
 export const Home = () => {
   const [userName, setUserName] = useState<string | null>(() => {
     return sessionStorage.getItem(STORAGE_KEYS.USERNAME);
@@ -98,10 +142,15 @@ export const Home = () => {
 
   return (
     <ToastProvider>
-      {!userName ? (
-        <NameEntry onNameSubmit={handleNameSubmit} />
-      ) : (
+      {userName ? (
         <AppContent userName={userName} initialRoomId={initialRoomId} />
+      ) : (
+        <>
+          <div aria-hidden="true" inert className="pointer-events-none select-none">
+            <PreviewMainUI />
+          </div>
+          <NameEntry onNameSubmit={handleNameSubmit} />
+        </>
       )}
       <ToastContainer />
     </ToastProvider>

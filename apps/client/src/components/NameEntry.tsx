@@ -39,7 +39,7 @@ export default function NameEntry({ onNameSubmit }: NameEntryProps) {
   }, null);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground transition-colors duration-300 selection:bg-primary selection:text-background">
+    <div className="fixed inset-0 z-50 flex min-h-screen flex-col overflow-y-auto bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 selection:bg-primary selection:text-background">
       {/* Navbar without line separator */}
       <nav
         className="w-full max-w-7xl mx-auto flex items-center justify-between px-6 sm:px-12 py-6"
@@ -123,11 +123,6 @@ export default function NameEntry({ onNameSubmit }: NameEntryProps) {
           )}
         </div>
       </main>
-
-      {/* Footer Info without hard line */}
-      <footer className="py-4 px-6 text-center text-xs text-on-surface-variant font-label">
-        Transfers run peer-to-peer. A signaling server is only used to discover and establish direct peer links.
-      </footer>
     </div>
   );
 }

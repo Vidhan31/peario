@@ -19,9 +19,10 @@ import GlacierTransferZone from "./transfer/GlacierTransferZone";
 
 interface PearProps {
   initialRoomId?: string | null;
+  preview?: boolean;
 }
 
-export const Pear = ({ initialRoomId }: PearProps) => {
+export const Pear = ({ initialRoomId, preview = false }: PearProps) => {
   useRateLimitHandler();
   const isSocketConnected = useSocketStatus();
   const isMobile = useIsMobile();
@@ -158,8 +159,8 @@ export const Pear = ({ initialRoomId }: PearProps) => {
 
   return (
     <div className="min-h-screen antialiased flex flex-col justify-between px-4 sm:px-8 lg:px-16 py-6 lg:py-10 selection:bg-primary selection:text-background relative bg-background text-foreground">
-      {/* Disconnected State Banner */}
-      {!isSocketConnected && (
+      {/* Disconnected State Banner (hidden in landing preview — no connection attempted before name entry) */}
+      {!preview && !isSocketConnected && (
         <div
           role="alert"
           className="mb-4 rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-2.5 text-center text-xs sm:text-sm font-medium text-red-400 flex items-center justify-center gap-2 z-50 shrink-0"
