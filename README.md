@@ -131,19 +131,6 @@ bun run test:e2e
 bun run test:e2e:large
 ```
 
-## Browser compatibility
-
-| Browser                  | Streams to disk | Memory use |
-| ------------------------ | --------------- | ---------- |
-| Chrome desktop 152, 153  | Yes             | Flat       |
-| Chrome Android 152       | Mostly          | Flat*      |
-| Firefox desktop 154, 155 | Yes             | Flat       |
-| Firefox Android          | Foreground only | Flat*      |
-| Safari macOS 26          | Yes             | Flat       |
-| Safari iOS 26            | Yes, foreground | Flat*      |
-
-_Mobile browsers should work fine as long as browser is in foreground._
-
 ## License
 
 Apache-2.0. See `LICENSE`.
